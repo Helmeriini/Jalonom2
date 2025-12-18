@@ -1,0 +1,178 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────────────────────
+   Tailwind v4 theme tokens
+   ───────────────────────────────────────────────────────────── */
+
+@theme {
+  --color-gold-50: #fdf7ed;
+  --color-gold-100: #f9f1d8;
+  --color-gold-200: #efdfc0;
+  --color-gold-300: #e4d3a6;
+  --color-gold-400: #d4bc88;
+  --color-gold-500: #c5a96f;
+  --color-gold-600: #ad9056;
+  --color-gold-700: #967d48;
+  --color-gold-800: #7a6235;
+  --color-gold-900: #5c4b2b;
+
+  /* Squarer corners across the UI */
+  --radius-sm: 0.125rem;
+  --radius-md: 0.25rem;
+  --radius-lg: 0.375rem;
+  --radius-xl: 0.5rem;
+  --radius-2xl: 0.75rem;
+  --radius-3xl: 1rem;
+  --radius-4xl: 1.25rem;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Base layer
+   ───────────────────────────────────────────────────────────── */
+
+@layer base {
+  html {
+    height: 100%;
+    scroll-behavior: auto; /* Lenis controls smoothing */
+  }
+
+  body {
+    min-height: 100%;
+    background-color: #0c0b09;
+    overscroll-behavior: none;
+    color: #e7e1d6;
+    font-family: var(--font-inter), "Inter", system-ui, -apple-system,
+      "Segoe UI", sans-serif;
+    line-height: 1.7;
+    letter-spacing: 0.01em;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "liga", "calt", "lnum", "pnum", "kern";
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-noto-serif), "Cormorant Garamond", "Times New Roman",
+      serif;
+    letter-spacing: -0.01em;
+    line-height: 1.08;
+    text-wrap: balance;
+  }
+
+  p,
+  li {
+    text-wrap: pretty;
+    color: inherit;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Utilities & animations
+   ───────────────────────────────────────────────────────────── */
+
+@layer utilities {
+  .font-serif {
+    font-family: var(--font-noto-serif), "Cormorant Garamond",
+      "Times New Roman", serif;
+    letter-spacing: -0.01em;
+  }
+
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(18px) scale(0.99);
+      filter: blur(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: blur(0);
+    }
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px) scale(0.985);
+    filter: blur(2px);
+    transition:
+      opacity 900ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 900ms cubic-bezier(0.16, 1, 0.3, 1),
+      filter 950ms ease;
+    transition-delay: var(--reveal-delay, 0ms);
+    will-change: opacity, transform, filter;
+  }
+
+  .reveal-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-fade-in-up,
+    .reveal {
+      animation: none;
+      transition: none;
+      transform: none;
+      filter: none;
+      opacity: 1;
+    }
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Scrollbar styling
+   ───────────────────────────────────────────────────────────── */
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-gold-700) #0c0b09;
+}
+
+/* Chromium / WebKit */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0c0b09;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    180deg,
+    var(--color-gold-600),
+    var(--color-gold-800)
+  );
+  border-radius: var(--radius-lg);
+  border: 2px solid #0c0b09;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    180deg,
+    var(--color-gold-500),
+    var(--color-gold-700)
+  );
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: linear-gradient(
+    180deg,
+    var(--color-gold-400),
+    var(--color-gold-600)
+  );
+}
+
+/* Corner for dual-axis scroll */
+::-webkit-scrollbar-corner {
+  background: #0c0b09;
+}
