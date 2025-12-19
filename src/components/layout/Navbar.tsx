@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
+import Link from "next/link"; // Changed from 'a' tag to Next Link
 import { NAV_ITEMS } from "../../data/navigation";
 import { Button } from "../ui/Button";
 import { Logo } from "../ui/Logo";
@@ -12,29 +13,31 @@ export const Navbar: React.FC = () => {
   const navRef = useRef<HTMLElement | null>(null);
 
   const handleNavClick = (href: string) => (e: React.MouseEvent) => {
-    if (!href.startsWith("#")) return;
-    e.preventDefault();
-    setIsMobileMenuOpen(false);
+    // If it's a hash link, we prevent default to use our smooth scroll
+    if (href.startsWith("#")) {
+      e.preventDefault();
+      setIsMobileMenuOpen(false);
 
-    if (href === "#") {
-      scrollToTarget(document.body, { offset: 0 });
-      window.history.replaceState(
-        null,
-        "",
-        window.location.pathname + window.location.search,
-      );
-      return;
+      if (href === "#") {
+        scrollToTarget(document.body, { offset: 0 });
+        window.history.replaceState(
+          null,
+          "",
+          window.location.pathname + window.location.search,
+        );
+        return;
+      }
+
+      const navHeight = navRef.current?.getBoundingClientRect().height ?? 0;
+      const navOffset = -(navHeight + 16);
+      scrollToTarget(href, { offset: navOffset });
+      window.history.replaceState(null, "", href);
     }
-
-    const navHeight = navRef.current?.getBoundingClientRect().height ?? 0;
-    const navOffset = -(navHeight + 16);
-    scrollToTarget(href, { offset: navOffset });
-    window.history.replaceState(null, "", href);
+    // If it were a real page route, Link would handle it automatically
   };
 
   useEffect(() => {
     const handleScroll = () => {
-      // PERFORMANCE OPTIMIZATION: Only update state if it actually changed
       const shouldBeScrolled = window.scrollY > 50;
       setIsScrolled((prev) => {
         if (prev !== shouldBeScrolled) {
@@ -58,16 +61,16 @@ export const Navbar: React.FC = () => {
     >
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between gap-6">
         {/* Logo */}
-        <a href="#" onClick={handleNavClick("#")} className="flex items-center">
+        <Link href="#" onClick={handleNavClick("#")} className="flex items-center">
           <Logo className="h-8 w-auto text-gold-400" />
           <span className="sr-only">Jalonom</span>
-        </a>
+        </Link>
 
         {/* Desktop Nav */}
         <div className="hidden md:flex flex-1 justify-center">
           <div className="flex space-x-12 items-center">
             {NAV_ITEMS.map((item) => (
-              <a
+              <Link
                 key={item.label}
                 href={item.href}
                 onClick={handleNavClick(item.href)}
@@ -75,7 +78,7 @@ export const Navbar: React.FC = () => {
               >
                 {item.label}
                 <span className="absolute -bottom-2 left-0 w-0 h-px bg-gold-500 transition-all duration-300 group-hover:w-full"></span>
-              </a>
+              </Link>
             ))}
           </div>
         </div>
@@ -118,7 +121,7 @@ export const Navbar: React.FC = () => {
       >
         <div className="flex flex-col items-center py-8 space-y-6">
           {NAV_ITEMS.map((item) => (
-            <a
+            <Link
               key={item.label}
               href={item.href}
               className="text-sm uppercase tracking-[0.2em] text-stone-300 hover:text-gold-300"
@@ -128,7 +131,7 @@ export const Navbar: React.FC = () => {
               }}
             >
               {item.label}
-            </a>
+            </Link>
           ))}
         </div>
       </div>

@@ -15,8 +15,12 @@ type MetalPriceApiResponse = {
   error?: string;
 };
 
-export function useMetalPrices(): PriceState {
-  const [state, setState] = useState<PriceState>({ loading: true });
+export function useMetalPrices(initialPrice?: number): PriceState {
+  const [state, setState] = useState<PriceState>({ 
+    loading: !initialPrice,
+    goldPerOzUsd: initialPrice,
+    lastUpdated: initialPrice ? new Date() : undefined
+  });
 
   useEffect(() => {
     const controller = new AbortController();
@@ -38,27 +42,34 @@ export function useMetalPrices(): PriceState {
           });
           return;
         }
-
         throw new Error("Invalid metal price data");
       } catch (err: unknown) {
         if (err instanceof DOMException && err.name === "AbortError") return;
-        setState({
-          loading: false,
-          goldPerOzUsd: 2650.0,
-          lastUpdated: new Date(),
-          error: "Live-yhteys katkesi, käytetään arviota.",
-        });
+        // Only set error state if we don't have an initial price (fallback)
+        if (!state.goldPerOzUsd) {
+             setState({
+              loading: false,
+              goldPerOzUsd: 2650.0,
+              lastUpdated: new Date(),
+              error: "Live-yhteys katkesi, käytetään arviota.",
+            });
+        }
       }
     }
 
-    fetchPrice();
+    // If we have initial data, we wait 60s before first fetch. 
+    // If not, we fetch immediately.
+    if (!initialPrice) {
+        fetchPrice();
+    }
+    
     const interval = setInterval(fetchPrice, 60000);
 
     return () => {
       controller.abort();
       clearInterval(interval);
     };
-  }, []);
+  }, [initialPrice]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return state;
 }

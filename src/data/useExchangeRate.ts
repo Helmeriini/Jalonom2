@@ -16,8 +16,12 @@ type ExchangeRateApiResponse = {
 export function useExchangeRate(
   baseCurrency: string,
   targetCurrency: string,
+  initialRate?: number
 ): ExchangeRateState {
-  const [state, setState] = useState<ExchangeRateState>({ loading: true });
+  const [state, setState] = useState<ExchangeRateState>({ 
+    loading: !initialRate,
+    rate: initialRate
+  });
 
   useEffect(() => {
     const controller = new AbortController();
@@ -28,9 +32,7 @@ export function useExchangeRate(
           `/api/exchange-rate?base=${encodeURIComponent(baseCurrency)}&target=${encodeURIComponent(targetCurrency)}`,
           { signal: controller.signal },
         );
-        if (!res.ok) {
-          throw new Error("Failed to fetch exchange rate");
-        }
+        if (!res.ok) throw new Error("Failed to fetch exchange rate");
 
         const data = (await res.json()) as ExchangeRateApiResponse;
         if (typeof data.rate === "number") {
@@ -44,15 +46,19 @@ export function useExchangeRate(
         }
       } catch (err: unknown) {
         if (err instanceof DOMException && err.name === "AbortError") return;
-        setState({
-          loading: false,
-          rate: 0.92,
-          error: "Could not fetch exchange rate, using estimate.",
-        });
+        if (!state.rate) {
+            setState({
+              loading: false,
+              rate: 0.92,
+              error: "Could not fetch exchange rate, using estimate.",
+            });
+        }
       }
     }
 
-    fetchRate();
+    if (!initialRate) {
+        fetchRate();
+    }
 
     const interval = setInterval(fetchRate, 3600000);
 
@@ -60,7 +66,7 @@ export function useExchangeRate(
       controller.abort();
       clearInterval(interval);
     };
-  }, [baseCurrency, targetCurrency]);
+  }, [baseCurrency, targetCurrency, initialRate]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return state;
 }

@@ -11,17 +11,29 @@ import { Button } from "../ui/Button";
 
 const OZ_TO_GRAM = 31.1035;
 
-export const GoldSelling: React.FC = () => {
+interface GoldSellingProps {
+  initialGoldPrice?: number;
+  initialExchangeRate?: number;
+}
+
+export const GoldSelling: React.FC<GoldSellingProps> = ({ 
+  initialGoldPrice, 
+  initialExchangeRate 
+}) => {
+  // Pass initial server data to hooks
   const {
     goldPerOzUsd,
     lastUpdated,
     loading: metalLoading,
     error,
-  } = useMetalPrices();
+  } = useMetalPrices(initialGoldPrice);
+
   const { rate: usdToEur, loading: rateLoading } = useExchangeRate(
     "USD",
     "EUR",
+    initialExchangeRate
   );
+
   const [timeAgo, setTimeAgo] = useState<string>("Juuri nyt");
 
   const loading = metalLoading || rateLoading;
@@ -31,17 +43,14 @@ export const GoldSelling: React.FC = () => {
       ? (goldPerOzUsd * usdToEur) / OZ_TO_GRAM
       : undefined;
 
-  // FIXED: Changed 0.583 to 0.585 (standard 14K in Finland/EU)
   const gold14k = pureGoldEurPerGram ? pureGoldEurPerGram * 0.585 : undefined;
   const gold18k = pureGoldEurPerGram ? pureGoldEurPerGram * 0.75 : undefined;
 
-  // Effect to update the "time ago" text every minute
   useEffect(() => {
     if (!lastUpdated) return;
 
     const updateTime = () => {
       const now = new Date();
-      // Calculate difference in seconds
       const diffInSeconds = Math.floor(
         (now.getTime() - lastUpdated.getTime()) / 1000,
       );
@@ -54,8 +63,8 @@ export const GoldSelling: React.FC = () => {
       }
     };
 
-    updateTime(); // Run immediately on load
-    const intervalId = setInterval(updateTime, 60000); // Update every 60 seconds
+    updateTime();
+    const intervalId = setInterval(updateTime, 60000);
 
     return () => clearInterval(intervalId);
   }, [lastUpdated]);
@@ -74,7 +83,6 @@ export const GoldSelling: React.FC = () => {
       id="process"
       className="pt-4 pb-24 md:pb-64 bg-stone-950 relative overflow-hidden z-10"
     >
-      {/* Background blobs */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-full pointer-events-none">
         <div className="absolute top-[20%] left-[10%] w-[50vw] md:w-[20vw] h-[30vw] md:h-[20vw] bg-gold-500/5 rounded-full blur-[80px] md:blur-[100px]"></div>
         <div className="absolute bottom-[10%] right-[10%] w-[20vw] h-[20vw] bg-stone-500/5 rounded-full blur-[80px]"></div>
@@ -157,9 +165,10 @@ export const GoldSelling: React.FC = () => {
               </div>
 
               <div className="relative order-1 h-[18rem] md:h-[24rem] lg:order-2 lg:h-full">
+                {/* IMPROVED: Added descriptive alt text for accessibility */}
                 <Image
                   src="https://www.kokemaenjokilaakso.fi/wp-content/uploads/2018/01/posti-jakaja-001.jpg"
-                  alt="Jalonom service"
+                  alt="Postin työntekijä jakamassa postia" 
                   fill
                   className="object-cover"
                   sizes="(max-width: 1024px) 100vw, 50vw"
@@ -182,10 +191,8 @@ export const GoldSelling: React.FC = () => {
               Hintamme perustuvat reaaliaikaiseen maailmanmarkkinahintaan.
             </p>
 
-            {/* NEW BADGE SECTION */}
             <div className="relative z-10 flex justify-center mb-10">
               <div className="inline-flex items-center gap-2 bg-stone-950/80 border border-gold-500/20 rounded-lg px-4 py-1.5 backdrop-blur-sm">
-                {/* Icon spins if loading is true */}
                 <RotateCw
                   className={`w-3 h-3 text-gold-500 ${loading ? "animate-spin" : ""}`}
                 />
