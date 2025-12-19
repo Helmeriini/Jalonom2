@@ -14,7 +14,7 @@ export const Hero: React.FC = () => {
           aria-hidden="true"
           fill
           priority
-          className="object-cover opacity-60"
+          className="object-cover opacity-80"
           sizes="100vw"
         />
 
