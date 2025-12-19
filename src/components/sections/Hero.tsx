@@ -14,13 +14,13 @@ export const Hero: React.FC = () => {
           aria-hidden="true"
           fill
           priority
-          className="object-cover opacity-80"
+          className="object-cover opacity-50"
           sizes="100vw"
         />
 
         {/* Overlays */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_120%_80%_at_top,var(--tw-gradient-stops))] from-transparent via-stone-950/60 to-stone-950" />
-        <div className="absolute inset-0 bg-linear-to-b from-stone-950/20 via-stone-950/70 to-stone-950" />
+        <div className="absolute inset-0 bg-linear-to-b from-transparent via-stone-950/50 to-stone-950" />
       </div>
 
       {/* Main content */}

@@ -15,7 +15,7 @@ export default async function Home() {
   const exchangeData = await fetchExchangeRate("USD", "EUR");
 
   return (
-    <div className="min-h-screen bg-stone-950 text-stone-100 selection:bg-gold-500 selection:text-stone-950">
+    <div className="page-entrance min-h-screen bg-stone-950 text-stone-100 selection:bg-gold-500 selection:text-stone-950">
       <ClientEffects />
       <Navbar />
 
