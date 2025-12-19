@@ -77,6 +77,8 @@
     font-family: var(--font-noto-serif), "Cormorant Garamond",
       "Times New Roman", serif;
     letter-spacing: -0.01em;
+    /* FIX: Enforce medium weight for better legibility on dark backgrounds */
+    font-weight: 500; 
   }
 
   @keyframes fade-in-up {

@@ -4,7 +4,7 @@ import Favicon from "../../assets/icons/favicon.svg";
 
 export const Footer: React.FC = () => {
   return (
-    <footer className="relative bg-gradient-to-b from-stone-950 to-black border-t border-stone-900 overflow-hidden">
+    <footer className="relative bg-gradient-to-b from-stone-950 to-black border-t border-stone-800 overflow-hidden">
       {/* Decorative favicon */}
       { }
       <img
@@ -32,7 +32,7 @@ export const Footer: React.FC = () => {
             {["Instagram", "Pinterest", "Facebook"].map((item) => (
               <a
                 key={item}
-                className="text-stone-500 hover:text-gold-300 uppercase tracking-widest text-xs transition-colors"
+                className="text-stone-400 hover:text-gold-300 uppercase tracking-widest text-xs transition-colors cursor-pointer"
               >
                 {item}
               </a>
@@ -45,7 +45,7 @@ export const Footer: React.FC = () => {
           <h3 className="text-white font-serif text-2xl md:text-3xl mb-3">
             Tilaa Jalonom-uutiskirje
           </h3>
-          <p className="text-stone-500 text-sm md:text-base mb-8">
+          <p className="text-stone-400 text-sm md:text-base mb-8">
             Ajankohtaiset uutiset, inspiraatiota ja kutsuja yksinoikeudella.
           </p>
 
@@ -56,11 +56,11 @@ export const Footer: React.FC = () => {
               className="
                 w-full
                 rounded-lg
-                bg-stone-950
-                border border-stone-700
+                bg-stone-900 
+                border border-stone-800
                 px-5 py-3
                 text-sm text-white
-                placeholder:text-stone-600
+                placeholder:text-stone-500
                 focus:outline-none
                 focus:border-gold-500/60
                 transition-colors
@@ -84,12 +84,12 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Footer Columns */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-12 border-t border-stone-900 pt-14 text-center sm:text-left">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-12 border-t border-stone-800 pt-14 text-center sm:text-left">
           <div>
             <h4 className="text-white uppercase tracking-widest text-xs mb-4">
               Jalonom Oy
             </h4>
-            <p className="text-stone-500 text-sm leading-relaxed">
+            <p className="text-stone-400 text-sm leading-normal">
               Vanha Maantie 1
               <br />
               02650 Espoo
@@ -108,10 +108,10 @@ export const Footer: React.FC = () => {
             <h4 className="text-white uppercase tracking-widest text-xs mb-4">
               Osta
             </h4>
-            <ul className="space-y-2 text-stone-500 text-sm">
-              <li><a className="hover:text-gold-300 transition-colors">MYY</a></li>
-              <li><a className="hover:text-gold-300 transition-colors">TALLELOKEROT</a></li>
-              <li><a className="hover:text-gold-300 transition-colors">KAUPPA</a></li>
+            <ul className="space-y-2 text-stone-400 text-sm">
+              <li><a className="hover:text-gold-300 transition-colors cursor-pointer">MYY</a></li>
+              <li><a className="hover:text-gold-300 transition-colors cursor-pointer">TALLELOKEROT</a></li>
+              <li><a className="hover:text-gold-300 transition-colors cursor-pointer">KAUPPA</a></li>
             </ul>
           </div>
 
@@ -119,9 +119,9 @@ export const Footer: React.FC = () => {
             <h4 className="text-white uppercase tracking-widest text-xs mb-4">
               Asiointi
             </h4>
-            <ul className="space-y-2 text-stone-500 text-sm">
-              <li><a className="hover:text-gold-300 transition-colors">ASIOINTIPISTEET</a></li>
-              <li><a className="hover:text-gold-300 transition-colors">KULLAN HINTA</a></li>
+            <ul className="space-y-2 text-stone-400 text-sm">
+              <li><a className="hover:text-gold-300 transition-colors cursor-pointer">ASIOINTIPISTEET</a></li>
+              <li><a className="hover:text-gold-300 transition-colors cursor-pointer">KULLAN HINTA</a></li>
             </ul>
           </div>
 
@@ -129,10 +129,10 @@ export const Footer: React.FC = () => {
             <h4 className="text-white uppercase tracking-widest text-xs mb-4">
               Tietoa
             </h4>
-            <ul className="space-y-2 text-stone-500 text-sm">
-              <li><a className="hover:text-gold-300 transition-colors">ARTIKKELIT JA OPPAAT</a></li>
-              <li><a className="hover:text-gold-300 transition-colors">JALONOM YRITYKSILLE</a></li>
-              <li><a className="hover:text-gold-300 transition-colors">MEILLE TÖIHIN?</a></li>
+            <ul className="space-y-2 text-stone-400 text-sm">
+              <li><a className="hover:text-gold-300 transition-colors cursor-pointer">ARTIKKELIT JA OPPAAT</a></li>
+              <li><a className="hover:text-gold-300 transition-colors cursor-pointer">JALONOM YRITYKSILLE</a></li>
+              <li><a className="hover:text-gold-300 transition-colors cursor-pointer">MEILLE TÖIHIN?</a></li>
             </ul>
           </div>
 
@@ -140,15 +140,15 @@ export const Footer: React.FC = () => {
             <h4 className="text-white uppercase tracking-widest text-xs mb-4">
               Legal
             </h4>
-            <ul className="space-y-2 text-stone-500 text-sm">
-              <li><a className="hover:text-gold-300 transition-colors">Tilaus- ja toimitusehdot</a></li>
-              <li><a className="hover:text-gold-300 transition-colors">Tietosuojaseloste</a></li>
-              <li><a className="hover:text-gold-300 transition-colors">Saavutettavuusseloste</a></li>
+            <ul className="space-y-2 text-stone-400 text-sm">
+              <li><a className="hover:text-gold-300 transition-colors cursor-pointer">Tilaus- ja toimitusehdot</a></li>
+              <li><a className="hover:text-gold-300 transition-colors cursor-pointer">Tietosuojaseloste</a></li>
+              <li><a className="hover:text-gold-300 transition-colors cursor-pointer">Saavutettavuusseloste</a></li>
             </ul>
           </div>
         </div>
 
-        <div className="mt-14 pt-6 border-t border-stone-900 text-center text-stone-600 text-xs">
+        <div className="mt-14 pt-6 border-t border-stone-800 text-center text-stone-600 text-xs">
           Copyright © {new Date().getFullYear()} Jalonom Oy.
         </div>
       </div>
